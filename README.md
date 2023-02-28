@@ -1,0 +1,2 @@
+# iterMagic
+helpers for intIter
