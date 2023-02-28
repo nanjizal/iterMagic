@@ -1,4 +1,4 @@
-import iterMagic;
+package iterMagic;
 /**
     Like a normal IntIterator but allows access of start and max after construction and reuse.
 **/
