@@ -1,4 +1,11 @@
 package iterMagic;
+/*
+class Test {
+  static function main() {
+    for( i in ( 0...10: StepIterator ).step( 2 ) ) trace( i );
+  }
+}
+*/
 @:access(IntIterator.min, IntIterator.max )
 class IntIterStep {
     public var start: Int;
