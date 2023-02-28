@@ -7,7 +7,7 @@ class IntIterStep {
   	public var count: Int;
     public function new( min_: Int, max_: Int, step_: Int = 1 ){
         start = min_;
-      	count = min_;
+      	count = min_- step_-1;
         max = max_;
       	if( step_ < 0 || step_ > this.max ) throw 'illegal step';
         step = step_;
@@ -31,10 +31,10 @@ abstract StepIterator( IntIterStep ) from IntIterStep {
         this = new IntIterStep( min, max );
     }
 	  public inline function hasNext() {
-		    return this.count < this.max - ( this.step - 1 );
+		    return this.count < this.max - this.step;
 	  }
 	  public inline function next() {
-        this.count += this.step;
+      	this.count += this.step;
 		    return this.count;
 	  }
     @:from
