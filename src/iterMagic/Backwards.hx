@@ -3,9 +3,7 @@ import iterMagic.IntIterStart;
 /*
 class Test {
   static function main() {
-    for( i in (( 0...10 ): Backwards ) ){
-			trace( i );
-    }
+    for( i in (( 0...10 ): Backwards ) ) trace( i );
   }
 }
 */
