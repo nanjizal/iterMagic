@@ -6,7 +6,8 @@ package iterMagic;
 class IntIterStart {
     public var start: Int;
     public var max: Int;
-    public function new( min_: Int, max_: Int ){
+    public inline
+    function new( min_: Int, max_: Int ){
         start = min_;
         max = max_;
     }
