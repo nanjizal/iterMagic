@@ -1,4 +1,4 @@
-import iterMagic;
+package iterMagic;
 @:access(IntIterator.min, IntIterator.max )
 class IntIterStep {
     public var start: Int;
