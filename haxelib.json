@@ -1,0 +1,12 @@
+{
+    "name"         : "iterMagic",
+    "url"          : "https://github.com/nanjizal/iterMagic#iterMagic",
+    "license"      : "MIT",
+    "tags"         : ["cross", "general","iterator"],
+    "description"  : "Iterator utility",
+    "version"      : "0.0.1-alpha",
+    "releasenote"  : "See https://github.com/nanjizal/iterMagic/blob/master/CHANGELOG.md",
+    "contributors" : ["Nanjizal"],
+    "classPath"    : "src",
+    "dependencies" : {}
+}
