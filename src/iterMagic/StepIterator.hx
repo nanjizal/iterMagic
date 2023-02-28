@@ -12,7 +12,8 @@ class IntIterStep {
     public var max: Int;
     public var step: Int;
   	public var count: Int;
-    public function new( min_: Int, max_: Int, step_: Int = 1 ){
+    public inline
+    function new( min_: Int, max_: Int, step_: Int = 1 ){
         start = min_;
       	count = min_- step_-1;
         max = max_;
