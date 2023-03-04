@@ -1,3 +1,12 @@
+/**
+ usage
+```
+function main(){
+    for( i in ( 0...100: Int64Iter ) ) trace( i );
+}  
+```
+*/
+
 import haxe.Int64;
 class IntIterator64 {
 	var min:Int64;
@@ -27,4 +36,20 @@ class IntIterator64 {
 		return min++;
 	}
   
+}
+
+@:transitive
+@:access( IntIterator.min, IntIterator.max )
+@:forward
+abstract Int64Iter( IntIterator64 ){
+    public inline
+    function new( min: Int, max: Int ){
+        this = new IntIterator64( min, max );
+    }      
+    // Throws an exception if cannot be represented in 32 bits.
+    @:from
+    static inline
+    public function fromIterator( ii: IntIterator ): Int64Iter {
+  	    return new Int64Iter( Int64.toInt( ii.min ), Int64.toInt( ii.max ) );
+    }
 }
