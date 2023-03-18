@@ -43,14 +43,14 @@ Provides a more flexible basic Iterator.
 ```haxe
 function main() {
     var iterRange: IteratorRange = 0...10;
-  	iterRange.start = 5;
+    iterRange.start = 5;
     for( i in iterRange ) trace( i );
     trace( '7 is within iterRange : ' + iterRange.contains( 7 ) );
     trace( '6.5 is within iterRange: ' + iterRange.containsF( 7.5 ) );
     trace( ' 6...9 is within iterRange : ' + iterRange.isWithin( 6...9 ) );
     iterRange += 6;
-  	trace( ' move IterRange by +6 ' );
-  	for( i in iterRange ) trace( i );
+    trace( ' move IterRange by +6 ' );
+    for( i in iterRange ) trace( i );
     trace( ' move IterRange by -6 ' );
     iterRange -= 6;
     for( i in iterRange ) trace( i );
