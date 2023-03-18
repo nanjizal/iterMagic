@@ -58,7 +58,7 @@ function main() {
     trace( 'iterRange.length ' + iterRange.length );
     iterRange.length = 4;
     trace( 'reduce length to 4');
-  	for( i in iterRange ) trace( i );
+    for( i in iterRange ) trace( i );
 }
 ```
 [try.haxe > IteratorRange](https://try.haxe.org/#4e9e85e4)  
