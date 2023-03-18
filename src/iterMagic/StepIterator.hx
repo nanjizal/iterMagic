@@ -30,21 +30,21 @@ abstract StepIterator( IntIterStep ) from IntIterStep {
         return new StepIterator( min, min + len - 1 );
     }
     public inline function step( step_: Int ): StepIterator {
-      if( step_ < 0 || step_ > this.max ) throw 'illegal step';
-			this.step = step_;
-      return this;
+        if( step_ < 0 || step_ > this.max ) throw 'illegal step';
+        this.step = step_;
+        return this;
     }
     public inline
     function new( min: Int, max: Int ){
         this = new IntIterStep( min, max );
     }
-	  public inline function hasNext() {
-		    return this.count < this.max - this.step;
-	  }
-	  public inline function next() {
+	public inline function hasNext() {
+	    return this.count < this.max - this.step;
+	}
+	public inline function next() {
       	this.count += this.step;
-		    return this.count;
-	  }
+	    return this.count;
+	}
     @:from
     static inline
     public function fromIterator( ii: IntIterator ): StepIterator {
@@ -52,7 +52,7 @@ abstract StepIterator( IntIterStep ) from IntIterStep {
     }
     @:to
     function toIterStart():StepIterator {
-       return new StepIterator( this.start, this.max );
+        return new StepIterator( this.start, this.max );
     }
     public inline function iterator(){
         return this.start...this.max;

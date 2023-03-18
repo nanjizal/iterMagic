@@ -18,7 +18,7 @@ class IntIterator64 {
 		Iterates from `min` (inclusive) to `max` (exclusive).
 		If `max <= min`, the iterator will not act as a countdown.
 	**/
-	public inline function new(min:Int64, max:Int64) {
+	public inline function new( min: Int64, max: Int64 ) {
 		this.min = min;
 		this.max = max;
 	}

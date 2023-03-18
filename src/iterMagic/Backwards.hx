@@ -2,9 +2,9 @@ package iterMagic;
 import iterMagic.IntIterStart;
 /*
 class Test {
-  static function main() {
-    for( i in (( 0...10 ): Backwards ) ) trace( i );
-  }
+    static function main() {
+        for( i in (( 0...10 ): Backwards ) ) trace( i );
+    }
 }
 */
 @:transitive
@@ -21,12 +21,12 @@ abstract Backwards( IntIterStart ) from IntIterStart {
     }
     @:to
     function toIterStart():Backwards {
-       return new Backwards( this.start, this.max );
+        return new Backwards( this.start, this.max );
     }
-	public inline function hasNext() {
-		return this.max > this.start;
-	}
-	public inline function next() {
-		return ( this.max-- -1 );
-	}
+    public inline function hasNext() {
+        return this.max > this.start;
+    }
+    public inline function next() {
+        return ( this.max-- -1 );
+    }
 }
