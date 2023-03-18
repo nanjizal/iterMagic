@@ -6,11 +6,9 @@ Provides a step Iterator.
     
 ```haxe
 import iterMagic.StepIterator;
-class Test {
-    static function main() {
-        // similar to Javascripts `for (let i = 0; i < 10; i+=2){}`
-        for( i in ( 0...10: StepIterator ).step( 2 ) ) trace( i );
-    }
+function main() {
+    // similar to Javascripts `for (let i = 0; i < 10; i+=2){}`
+    for( i in ( 0...10: StepIterator ).step( 2 ) ) trace( i );
 }
 ```
 [try.haxe > StepIterator](https://try.haxe.org/#Da90327f)
@@ -20,6 +18,7 @@ Provides a reverse Iterator.
   
 ```haxe
 // similar to Javascripts `for (let i = 9; i <= 0 ; i--){}`
+import iterMagic.Backwards;
 function main() {
     for( i in (( 0...10 ): Backwards ) ) trace( i );
 }
@@ -31,6 +30,7 @@ Provides a Iterator for Int64.
   
 ```haxe
 import haxe.Int64;
+import iterMagic.*;
 function main(){
     for( i in ( 0...100: Int64Iter ) ) trace( i );
     for( i in ((0:Int64): Int64_)...((100:Int64):Int64_) ) trace( i );
@@ -41,6 +41,7 @@ function main(){
 ## IteratorRange
 Provides a more flexible basic Iterator.  
 ```haxe
+import iterMagic.IteratorRange;
 function main() {
     var iterRange: IteratorRange = 0...10;
     iterRange.start = 5;
