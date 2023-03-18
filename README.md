@@ -21,7 +21,7 @@ Provides a reverse Iterator.
 ```haxe
 // similar to Javascripts `for (let i = 9; i <= 0 ; i--){}`
 function main() {
-	for( i in (( 0...10 ): Backwards ) ) trace( i );
+    for( i in (( 0...10 ): Backwards ) ) trace( i );
 }
 ```
 [try.haxe > Backwards](https://try.haxe.org/#Fd2bD912)  
