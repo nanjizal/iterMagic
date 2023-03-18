@@ -67,14 +67,14 @@ function main() {
 Provide a way to calculate the min and max, used with iteratating over triangles and quads points
 ```haxe
 function main() {
-  var bound3: IteratorRange = boundIterator3( 5.4, 3., 10 );
-  trace( bound3.start );
-  trace( bound3.max );
-  trace( bound3 );
-  var bound4: IteratorRange = boundIterator4( 12., 5.4, 3., 10 );
-  trace( bound4.start );
-  trace( bound4.max );
-  trace( bound4 );
+    var bound3: IteratorRange = boundIterator3( 5.4, 3., 10 );
+    trace( bound3.start );
+    trace( bound3.max );
+    trace( bound3 );
+    var bound4: IteratorRange = boundIterator4( 12., 5.4, 3., 10 );
+    trace( bound4.start );
+    trace( bound4.max );
+    trace( bound4 );
 }
 ```
 [try.haxe > BoundIterator](https://try.haxe.org/#2bc3902a)  
