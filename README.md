@@ -36,7 +36,7 @@ function main(){
     for( i in ((0:Int64): Int64_)...((100:Int64):Int64_) ) trace( i );
 }
 ```
-[try.haxe > Backwards](https://try.haxe.org/#717E7641)
+[try.haxe > Int64Iter](https://try.haxe.org/#717E7641)
   
 ## IteratorRange
 Provides a more flexible basic Iterator.  
