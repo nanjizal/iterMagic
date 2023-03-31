@@ -96,4 +96,40 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
   	public function toString(): String {
         return Std.string( this.start ) + '...' + Std.string( this.max );
   	}
+    public inline function map<A,B>(it:Iterable<A>,f:(item:A)->B):Array<B>{
+        var count = 0;
+        var arr = new Array<B>();
+        for( i in it ){ 
+           if( count >= this.start ) arr.push(f(i));
+           if( count == this.max ) break;
+           count++;
+        }
+        return arr;
+     }
+    public inline
+    function filter<A>(it:Iterable<A>, f:(item:A) -> Bool):Array<A>{
+        var count = 0;
+        var arr = new Array<A>();
+        for( i in it ){ 
+           if( count >= this.start ) if( f(i) ) arr.push( i );
+           if( count == this.max ) break;
+           count++;
+        }
+        return arr;
+     }
+    public inline
+    function find<T>(it:Iterable<T>, f:(item:T) -> Bool):Null<T>{
+        var count = 0;
+        var v = null;
+        for( i in it ){ 
+          if( count >= this.start ){
+            if( f(i) ){
+              v = i;
+              break;
+          }}
+          if( count == this.max ) break;
+          count++;
+        }
+        return v;
+    }
 }
