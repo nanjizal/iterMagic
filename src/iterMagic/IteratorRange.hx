@@ -147,6 +147,5 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
             count++;
         }
         return arr2;
-    }
-    
+    }   
 }
