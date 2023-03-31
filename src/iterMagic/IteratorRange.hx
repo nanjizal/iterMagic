@@ -105,7 +105,8 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
            count++;
         }
         return arr;
-     }
+    }
+
     public inline
     function filter<A>(it:Iterable<A>, f:(item:A) -> Bool):Array<A>{
         var count = 0;
@@ -131,5 +132,20 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
           count++;
         }
         return v;
+    }
+    public inline
+    function remapArray<A>( arr: Array<A>, f: (item:A)->A ): Array<A> {
+        for( i in this.start...this.max ) arr[ i ] = f( arr[ i ] );
+        return arr;
+    }
+    public inline
+    function mapArray<A>( arr: Array<A>, f: (item:A)->A ): Array<A> {
+        var arr2 = new Array<A>();
+        var count = 0;
+        for( i in this.start...this.max ){
+            arr2[ count ] = f( arr[ i ] );
+            count++;
+        }
+        return arr2;
     }
 }
