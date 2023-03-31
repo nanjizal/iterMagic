@@ -91,4 +91,9 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
         if( ifHas ) moveRange( amount );
         return ifHas; 
     }
+    @:to
+    inline 
+  	public function toString(): String {
+        return Std.string( this.start ) + '...' + Std.string( this.max );
+  	}
 }
