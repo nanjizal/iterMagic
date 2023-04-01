@@ -36,7 +36,7 @@ function main(){
     for( i in ((0:Int64): Int64_)...((100:Int64):Int64_) ) trace( i );
 }
 ```
-[try.haxe > Int64Iter](https://try.haxe.org/#717E7641)
+[try.haxe > Backwards](https://try.haxe.org/#717E7641)
   
 ## IteratorRange
 Provides a more flexible basic Iterator.  
@@ -79,3 +79,17 @@ function main() {
 ```
 [try.haxe > BoundIterator](https://try.haxe.org/#2bc3902a)  
   
+## IteratorRangeXY && IteratorRangeYX
+Provides a way to iterate over a rectange of points.
+```haxe
+function main() {
+  //var range: IteratorRangeYX = { outer: 5...10, inner: 6...11 };
+  var range: IteratorRangeYX = { x: 5, w: 4, y: 6, h: 4 };
+  for( v in range ){
+		trace( range.x, range.y );
+  }
+  trace("Haxe is great!");
+}
+
+```
+[try.haxe > IteratorRangeXY](https://try.haxe.org/#935d2aA2)
