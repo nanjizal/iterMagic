@@ -22,7 +22,11 @@ class IntIterXYZWT {
 	public var tReset:Int;
 	public var iter:IntIterator;
 
-	public inline function new(xRange_:IteratorRange, yRange_:IteratorRange, zRange_:IteratorRange, wRange_:IteratorRange, tRange_:IteratorRange) {
+	public inline function new( xRange_:IteratorRange
+                              , yRange_:IteratorRange
+                              , zRange_:IteratorRange
+                              , wRange_:IteratorRange
+                              , tRange_:IteratorRange ) {
 		x = xRange_.start;
 		y = yRange_.start - 1;
 		z = zRange_.start - 1;
@@ -38,48 +42,39 @@ class IntIterXYZWT {
 		zMax = zRange_.max - 2;
 		wMax = wRange_.max - 2;
 		tMax = tRange_.max - 2;
-		iter = 0...Std.int(xRange_.length * yRange_.length * zRange_.length * wRange_.length * tRange_.length);
+		iter = 0...Std.int( xRange_.length * yRange_.length * zRange_.length * wRange_.length * tRange_.length );
 	}
 }
 
 @:transitive
 @:access(IntIterator.min, IntIterator.max)
 @:forward
-abstract IteratorRangeXYZWT(IntIterXYZWT) from IntIterXYZWT {
-	public inline function new(xRange:IteratorRange, yRange:IteratorRange, zRange:IteratorRange) {
-		this = new IntIterXYZWT(xRange, yRange, zRange);
+abstract IteratorRangeXYZWT( IntIterXYZWT ) from IntIterXYZWT {
+	public inline function new( xRange: IteratorRange, yRange: IteratorRange, zRange: IteratorRange ) {
+		this = new IntIterXYZWT( xRange, yRange, zRange );
 	}
 
 	@:from
-	static inline public function fromIterator5D(five:{
-		outer:IntIterator,
-		middleOuter:IntIterator,
-		middle:IntIterator,
-		middleInner:IntIterator,
-		inner:IntIterator
-	}):IteratorRangeXYZWT {
-		return new IteratorRangeXYZWT(five.outer, five.middleOuter, five.middle, five.middleInner, five.inner);
+	static inline public function fromIterator5D(five:{ outer:       IntIterator,
+		                                                middleOuter: IntIterator,
+		                                                middle:      IntIterator,
+		                                                middleInner: IntIterator,
+		                                                inner:       IntIterator } ): IteratorRangeXYZWT {
+		return new IteratorRangeXYZWT( five.outer, five.middleOuter, five.middle, five.middleInner, five.inner );
 	}
 
 	@:from
-	static inline public function fromRect5D(r:{
-		x:Int,
-		w:Int,
-		y:Int,
-		h:Int,
-		z:Int,
-		d:Int,
-		w:Int,
-		v:Int,
-		t:Int,
-		s:Int
-	}):IteratorRangeXYZW {
+	static inline public function fromRect5D( r: { x: Int, w: Int
+		                                        ,  y: Int, h: Int
+		                                        ,  z: Int, d: Int
+		                                        ,  u: Int, v: Int
+                                                ,  t: Int, s: Int } ): IteratorRangeXYZW {
 		var xmax = r.x + r.w + 1;
 		var ymax = r.y + r.h + 1;
 		var zmax = r.z + r.d + 1;
-		var vmax = r.w + r.v + 1;
+		var wmax = r.u + r.v + 1;
 		var tmax = r.t + r.s + 1;
-		return new IteratorRangeXYZW(r.x...xmax, r.y...ymax, r.z...zmax, r.w...wmax, r.t...tmax);
+		return new IteratorRangeXYZW(r.x...xmax, r.y...ymax, r.z...zmax, r.u...wmax, r.t...tmax );
 	}
 
 	public inline function hasNext():Bool {
@@ -114,7 +109,7 @@ abstract IteratorRangeXYZWT(IntIterXYZWT) from IntIterXYZWT {
 		return this.iter.max - 0;
 	}
 
-	inline public function contains(x:Int, y:Int, z:Int, w:Int):Bool {
+	inline public function contains( x: Int, y: Int, z: Int, w: Int, t: Int ): Bool {
 		return (x > (this.xReset - 1) && (x < this.xMax))
 			&& (y > (this.yReset - 1) && (y < this.yMax))
 			&& (z > (this.zReset - 1) && (z < this.zMax))
@@ -122,7 +117,7 @@ abstract IteratorRangeXYZWT(IntIterXYZWT) from IntIterXYZWT {
 			&& (t > (this.tReset - 1) && (t < this.tMax));
 	}
 
-	inline public function containsF(x:Float, y:Float, z:Float):Bool {
+	inline public function containsF(x:Float, y:Float, z:Float, w: Int, t: Int ): Bool {
 		return (x > (this.xReset - 1) && (x < this.xMax))
 			&& (y > (this.yReset - 1) && (y < this.yMax))
 			&& (z > (this.zReset - 1) && (z < this.zMax))
@@ -131,19 +126,19 @@ abstract IteratorRangeXYZWT(IntIterXYZWT) from IntIterXYZWT {
 	}
 
 	inline public function getRangeX():IteratorRange {
-		return ((this.xReset...(this.xMax - 1)) : IteratorRange);
+		return (( this.xReset...(this.xMax - 1)) : IteratorRange);
 	}
 
 	inline public function getRangeY():IteratorRange {
-		return ((this.yReset...(this.yMax - 1)) : IteratorRange);
+		return (( this.yReset...(this.yMax - 1)) : IteratorRange);
 	}
 
 	public function getRangeZ():IteratorRange {
-		return ((this.zReset...(this.zMax - 1)) : IteratorRange);
+		return (( this.zReset...(this.zMax - 1)) : IteratorRange);
 	}
 
 	public function getRangeW():IteratorRange {
-		return ((this.wReset...(this.wMax - 1)) : IteratorRange);
+		return (( this.wReset...(this.wMax - 1)) : IteratorRange);
 	}
     public function getRangeT(): IteratorRange {
         return (( this.tReset...( this.tMax-1) ): IteratorRange );
