@@ -49,12 +49,12 @@ abstract IteratorRangeXYZW( IntIterXYZW ) from IntIterXYZW {
     }
     @:from
     static inline
-    public function fromRect4D( r: { x: Int, w: Int, y: Int, h: Int, z: Int, d: Int, w: Int, v: Int } ): IteratorRangeXYZW {
+    public function fromRect4D( r: { x: Int, w: Int, y: Int, h: Int, z: Int, d: Int, u: Int, v: Int } ): IteratorRangeXYZW {
         var xmax = r.x + r.w + 1;
         var ymax = r.y + r.h + 1;
         var zmax = r.z + r.d + 1;
-        var vmax = r.w + r.v + 1;
-        return new IteratorRangeXYZW( r.x...xmax, r.y...ymax, r.z...zmax, r.x...wmax );
+        var vmax = r.u + r.v + 1;
+        return new IteratorRangeXYZW( r.x...xmax, r.y...ymax, r.z...zmax, r.u...wmax );
     }
     public inline
     function hasNext():Bool{
@@ -92,7 +92,7 @@ abstract IteratorRangeXYZW( IntIterXYZW ) from IntIterXYZW {
             && ( w > ( this.wReset - 1 ) && ( w < this.wMax ) );
     }
     inline
-    public function containsF( x: Float, y: Float, z: Float ): Bool {
+    public function containsF( x: Float, y: Float, z: Float, w: Float ): Bool {
         return ( x > ( this.xReset - 1 ) && ( x < this.xMax ) ) 
             && ( y > ( this.yReset - 1 ) && ( y < this.yMax ) )
             && ( z > ( this.zReset - 1 ) && ( z < this.zMax ) )
