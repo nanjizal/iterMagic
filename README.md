@@ -93,3 +93,16 @@ function main() {
 
 ```
 [try.haxe > IteratorRangeXY](https://try.haxe.org/#935d2aA2)
+  
+## UnitItervalIterator
+Provides a way to iterate from 0 to 1 ( excluding 1 )
+```haxe
+  // https://try.haxe.org/#4aC54d24
+function main() {
+    var iter = new UnitIntervalIterator().step(10);
+    for( i in iter ){
+        trace( iter.value );
+    }
+}
+```
+[try.haxe > UnitItervalIterator](https://try.haxe.org/#4aC54d24)
