@@ -115,11 +115,36 @@ function main() {
 }
 ```
 [try.haxe > UnitIterator](https://try.haxe.org/#4aC54d24)
+  
 ## BackwardStep  
-`formTheTop` allows from the max value
+`formTheTop` allows from the max value  
 ```haxe
 function main() {
 	for (i in (0...10 : BackwardStep).step(2).fromTheTop()) trace(i);
 }
 ```
 [try.haxe > BackardStep](https://try.haxe.org/#C08D1E55)
+  
+## EaseIterator
+These could be used in an event loop, or the for loop can be used to create an array of values.
+
+```haxe
+function main() {
+    var ease = new EaseIterator().step(10).toTheTop().easing( sineInOut );
+    for( i in iter ){
+        trace( EaseIterator.change( i, 10, 20 ) );
+    }
+}
+```
+  
+```haxe
+function main() {
+    var ease = new EaseIterator().step(10).toTheTop();
+    ease.finished( function(){ trace( 'complete' ); } );
+    for( i in ease ){
+        var x = ease.changeEase( 10, 20, sineInOut );
+        var y = ease.changeEase( 10, 20, circInOut );
+        trace( 'v ' + x + ' ' + y );
+    }
+}
+```
