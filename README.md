@@ -94,15 +94,32 @@ function main() {
 ```
 [try.haxe > IteratorRangeXY](https://try.haxe.org/#935d2aA2)
   
-## UnitItervalIterator
-Provides a way to iterate from 0 to 1 ( excluding 1 )
+## UnitIterator  
+Provides a way to iterate from 0 to 1  
+`concluding` includes 1  
+`places` denotes number of decimal places, for steps of 0.1 setting places to 1 improves iter value.  
+`reset` resets the iterator for reuse.  
+
 ```haxe
   // https://try.haxe.org/#4aC54d24
 function main() {
-    var iter = new UnitIntervalIterator().step(10);
+    var iter = new UnitIterator().step(10).places(1).concluding();
+    for( i in iter ){
+        if( iter.value > 0.5 ) break;
+        trace( iter.value );
+    }
+    iter.reset();
     for( i in iter ){
         trace( iter.value );
     }
 }
 ```
-[try.haxe > UnitItervalIterator](https://try.haxe.org/#4aC54d24)
+[try.haxe > UnitIterator](https://try.haxe.org/#4aC54d24)
+## BackwardStep  
+`formTheTop` allows from the max value
+```haxe
+function main() {
+	for (i in (0...10 : BackwardStep).step(2).fromTheTop()) trace(i);
+}
+```
+[try.haxe > BackardStep](https://try.haxe.org/#C08D1E55)

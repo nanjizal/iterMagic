@@ -1,5 +1,5 @@
 package iterMagic;
-import iterMagic.IntIterStart;
+import iterMagic.IteratorRange;
 /*
 class Test {
     static function main() {
