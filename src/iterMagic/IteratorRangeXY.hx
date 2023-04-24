@@ -51,6 +51,13 @@ abstract IteratorRangeXY( IntIterXY ) from IntIterXY {
         var ymax = r.y + r.h + 1;
         return new IteratorRangeXY( r.x...xmax, r.y...ymax );
     }
+    @:from
+    static inline
+    public function fromRect2Df( r: { x: Float, w: Float, y: Float, h: Float } ): IteratorRangeXY {
+        var xmax = Std.int( r.x + r.w + 1 );
+        var ymax = Std.int( r.y + r.h + 1 );
+        return new IteratorRangeXY( Std.int( r.x )...xmax, Std.int( r.y)... ymax );
+    }
     public inline
     function hasNext():Bool{
         return this.iter.hasNext();
@@ -130,6 +137,13 @@ abstract IteratorRangeYX( IntIterYX ) from IntIterYX {
         var xmax = r.x + r.w + 1;
         var ymax = r.y + r.h + 1;
         return new IteratorRangeYX( r.x...xmax, r.y...ymax );
+    }
+    @:from
+    static inline
+    public function fromRect2Df( r: { x: Float, w: Float, y: Float, h: Float } ): IteratorRangeXY {
+        var xmax = Std.int( r.x + r.w + 1 );
+        var ymax = Std.int( r.y + r.h + 1 );
+        return new IteratorRangeYX( Std.int( r.x )...xmax, Std.int( r.y)... ymax );
     }
     public inline
     function hasNext():Bool{
