@@ -148,3 +148,34 @@ function main() {
     }
 }
 ```
+  
+## Pi2Iterator
+Provides an iterator over radians, always rotates the shortest distance.
+  
+```haxe
+function main() {
+    var start = -Math.PI;
+    var end = Math.PI + Math.PI/2;
+    trace( 'end ' + Pi2Iterator.pi2pi(end) );
+    var targetStep = Math.PI/18;
+    var iter = new Pi2Iterator( start, end, targetStep );
+    for( i in iter ){
+        trace( i );
+    }
+}
+```
+output
+```
+
+15:44:02:094   Test.hx:7:,end -1.5707963267948966
+15:44:02:097   Test.hx:11:,-3.141592653589793
+15:44:02:097   Test.hx:11:,-2.9670597283903604
+15:44:02:100   Test.hx:11:,-2.792526803190927
+15:44:02:102   Test.hx:11:,-2.6179938779914944
+15:44:02:103   Test.hx:11:,-2.443460952792061
+15:44:02:106   Test.hx:11:,-2.2689280275926285
+15:44:02:107   Test.hx:11:,-2.0943951023931957
+15:44:02:108   Test.hx:11:,-1.9198621771937625
+15:44:02:109   Test.hx:11:,-1.7453292519943295
+15:44:02:112   Test.hx:11:,-1.5707963267948966
+``
