@@ -38,7 +38,9 @@ class UnitIter {
 @:access( UnitIter.value )
 @:forward
 abstract UnitIterator( UnitIter ) from UnitIter {
+    // step must be positive
     public inline function step( count_: Int ): UnitIterator {
+        if( count_ < 0. ) count_ = -count_;
         this.step = 1./count_;
         this.value = 0.;
         this.max = count_;
