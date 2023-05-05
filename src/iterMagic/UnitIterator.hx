@@ -1,8 +1,11 @@
 package iterMagic;
 /*
+// positive
 // https://try.haxe.org/#4aC54d24
+// negative
+//https://try.haxe.org/#d4BcA806
 function main() {
-    var iter = new UnitIterator().step(10).places(1).toTheTop();
+    var iter = new UnitIterator().step(10).places(1).negative().toTheTop();
     for( i in iter ){
         if( i > 0.5 ) break;
         trace( i );
@@ -19,6 +22,7 @@ class UnitIter {
     public var max = .1;
     public var step: Float = 0;
   	public var value: Float = 0.;
+    public var isNegative: Bool = false;  
     var count = 0;
     public var includeMax:Bool = false;
     var cropTo: Null<Float> = null;
@@ -28,6 +32,7 @@ class UnitIter {
 @:transitive
 @:access( IntIterator.min, IntIterator.max )
 @:access( UnitIter.includeMax )
+@:access( UnitIter.isNegative )
 @:access( UnitIter.cropTo )
 @:access( UnitIter.count )
 @:access( UnitIter.value )
@@ -53,20 +58,24 @@ abstract UnitIterator( UnitIter ) from UnitIter {
     }
     public inline
     function next():Float {
-      	if( this.cropTo != null ){
-            this.value = crop( this.start + (this.count-1) * this.step );
-        } else {
-            this.value = this.start + (this.count-1) * this.step;
-        }
+      	var v = positiveValue();
+		this.value = ( this.isNegative )? -v: v;
         return this.value;
     }
-  	inline function crop( val: Float ){
+    inline function positiveValue(): Float {
+		return if( this.cropTo != null ){
+            crop( this.start + (this.count-1) * this.step );
+        } else {
+            this.start + (this.count-1) * this.step;
+        }
+    }
+    inline function crop( val: Float ){
         return Std.int( val*this.cropTo)/this.cropTo;	
   	}
     public inline
     function toTheTop() {
-		  this.includeMax = true;
-		  return abstract;
+		this.includeMax = true;
+		return abstract;
     }
   	public inline
     function places( n: Int ){
@@ -77,6 +86,22 @@ abstract UnitIterator( UnitIter ) from UnitIter {
     function reset(){
         this.count = 0;
         this.value = 0.;
+        return abstract;
+  	}
+    public inline
+  	function resetPositive(){
+		reset();
+        positive();
+        return abstract;
+  	}
+  	public inline
+  	function negative(){
+		this.isNegative = true;
+        return abstract;
+    }
+    public inline
+  	function positive(){
+		this.isNegative = false;
         return abstract;
   	}
 }
