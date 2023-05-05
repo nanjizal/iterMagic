@@ -60,12 +60,12 @@ abstract UnitIterator( UnitIter ) from UnitIter {
     }
     public inline
     function next():Float {
-      	var v = positiveValue();
-		this.value = ( this.isNegative )? -v: v;
+        var v = positiveValue();
+        this.value = ( this.isNegative )? -v: v;
         return this.value;
     }
     inline function positiveValue(): Float {
-		return if( this.cropTo != null ){
+        return if( this.cropTo != null ){
             crop( this.start + (this.count-1) * this.step );
         } else {
             this.start + (this.count-1) * this.step;
@@ -73,37 +73,46 @@ abstract UnitIterator( UnitIter ) from UnitIter {
     }
     inline function crop( val: Float ){
         return Std.int( val*this.cropTo)/this.cropTo;	
-  	}
+    }
     public inline
     function toTheTop() {
-		this.includeMax = true;
-		return abstract;
-    }
-  	public inline
-    function places( n: Int ){
-		this.cropTo = Math.pow( 10, n );
+        this.includeMax = true;
         return abstract;
-  	}
-  	public inline
+    }
+    public inline
+    function places( n: Int ){
+        this.cropTo = Math.pow( 10, n );
+        return abstract;
+    }
+    public inline
     function reset(){
         this.count = 0;
         this.value = 0.;
         return abstract;
-  	}
+    }
     public inline
-  	function resetPositive(){
-		reset();
+    function resetPositive(){
+        reset();
         positive();
         return abstract;
   	}
-  	public inline
-  	function negative(){
-		this.isNegative = true;
+    public inline
+    function negative(){
+        this.isNegative = true;
         return abstract;
     }
     public inline
-  	function positive(){
-		this.isNegative = false;
+    function positive(){
+        this.isNegative = false;
         return abstract;
-  	}
+    }
+    public static inline
+    function change( i: Float, start: Float, end: Float ){
+        return i*(end-start)+start;
+    }
+    public static inline
+    function changeCrop(i: Float, start: Float, end: Float, places_: Int ){
+        var n = Math.pow( 10, places_ );
+        return Std.int( ( i*(end-start)+start )*n )/n;
+    }
 }
