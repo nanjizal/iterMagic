@@ -183,7 +183,6 @@ output
 ## Pi2EaseIter
 Provides an ease iterator for use with Radians, always rotates shortest distance.
 ```haxe
-/*
 // https://try.haxe.org/#9D75044D
 class Test {
   static function main() {
