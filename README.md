@@ -188,7 +188,6 @@ class Test {
   static function main() {
     var start = -Math.PI;
     var end = Math.PI + Math.PI/2;
-    var targetStep = Math.PI/18;
     var iter = new Pi2EaseIter( start, end).step(10).easing( sineInOut );
     for( i in iter ){
         trace( i );
