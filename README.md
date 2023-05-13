@@ -178,4 +178,34 @@ output
 15:44:02:108   Test.hx:11:,-1.9198621771937625
 15:44:02:109   Test.hx:11:,-1.7453292519943295
 15:44:02:112   Test.hx:11:,-1.5707963267948966
-``
+```
+
+## Pi2EaseIter
+Provides an ease iterator for use with Radians, always rotates shortest distance.
+```haxe
+/*
+// https://try.haxe.org/#9D75044D
+class Test {
+  static function main() {
+    var start = -Math.PI;
+    var end = Math.PI + Math.PI/2;
+    var targetStep = Math.PI/18;
+    var iter = new Pi2EaseIter( start, end, targetStep ).easing( sineInOut );
+    for( i in iter ){
+        trace( i );
+    }
+  }
+}
+```
+```
+17:12:53:630   Test.hx:673:,-3.141592653589793
+17:12:53:633   Test.hx:673:,-3.0942273487157324
+17:12:53:634   Test.hx:673:,-2.957844388898811
+17:12:53:635   Test.hx:673:,-2.748893571891069
+17:12:53:636   Test.hx:673:,-2.4925774500092657
+17:12:53:637   Test.hx:673:,-2.219811530375424
+17:12:53:638   Test.hx:673:,-1.963495408493621
+17:12:53:639   Test.hx:673:,-1.7545445914858786
+17:12:53:640   Test.hx:673:,-1.6181616316689575
+17:12:53:641   Test.hx:673:,-1.5707963267948966
+```

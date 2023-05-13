@@ -15,14 +15,14 @@ function main() {
 */
 @:access(IntIterator.min, IntIterator.max )
 class Pi2Iter {
-    public var start = 0;
-    public var max = .1;
-    public var step: Float = 0;
-    public var startRadian = 0.;
-    public var stepFactor =0.;
-  	public var value: Float = 0.;
-    var count = 0;
-    public var includeMax:Bool = false;
+    public var start        = 0;
+    public var max          = .1;
+    public var step         = 0.;
+    public var startRadian  = 0.;
+    public var stepFactor   = 0.;
+  	public var value        = 0.;
+    var count               = 0;
+    public var includeMax   = false;
     public inline
     function new(){}
 }
