@@ -58,7 +58,7 @@ class Pi2EasyIter {
 @:forward
 abstract Pi2EaseIter( Pi2EasyIter ) from Pi2EasyIter {
     // step must be positive
-    inline function step( count_: Int ): Pi2EaseIter {
+    public inline function step( count_: Int ): Pi2EaseIter {
         if( count_ < 0. ) count_ = -count_;
         this.step = 1./count_;
         this.value = 0.;
@@ -66,13 +66,12 @@ abstract Pi2EaseIter( Pi2EasyIter ) from Pi2EasyIter {
         return abstract;
     }
     public inline
-    function new( start_: Float, end_: Float, targetStep: Float ){
+    function new( start_: Float, end_: Float ){
         this = new Pi2EasyIter();
         var delta = Pi2Iterator.small( start_, end_ );
         this.startRadian = start_;
-        var steps = Std.int( delta/targetStep );
         this.deltaRadian = delta;
-        abstract.step( steps ).toTheTop();
+        abstract.toTheTop();
     }
     public inline
     function hasNext() {
