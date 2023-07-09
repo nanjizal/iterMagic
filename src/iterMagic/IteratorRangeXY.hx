@@ -140,7 +140,7 @@ abstract IteratorRangeYX( IntIterYX ) from IntIterYX {
     }
     @:from
     static inline
-    public function fromRect2Df( r: { x: Float, w: Float, y: Float, h: Float } ): IteratorRangeXY {
+    public function fromRect2Df( r: { x: Float, w: Float, y: Float, h: Float } ): IteratorRangeYX {
         var xmax = Std.int( r.x + r.w + 1 );
         var ymax = Std.int( r.y + r.h + 1 );
         return new IteratorRangeYX( Std.int( r.x )...xmax, Std.int( r.y)... ymax );
