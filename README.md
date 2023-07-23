@@ -263,7 +263,10 @@ function floatTupleReturn(  updateBool:   Tupdate<Null<Bool>>
    updateString( 'hi' );
 }
 ```
-
+  
+## Tmodify update local var
+showing updating local varible without return on the function used.
+  
 ```haxe
 // https://try.haxe.org/#25B4a6DE
 function main() {
