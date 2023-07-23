@@ -236,3 +236,30 @@ function floatTupleReturn(  updateBool:   BoolUpdate
    updateString( 'hi' );
 }
 ```
+
+## Tmodify
+Similar to Update entry above but wraps any class for similar use.
+```haxe
+// https://try.haxe.org/#76DBF147
+function main() {
+    var f: Tmodify<Float> = 10.;
+    var i: Tmodify<Int> = 0;
+    var b: Tmodify<Null<Bool>> = null;
+    var s: Tmodify<String> = '';
+    floatTupleReturn( b.updater, f.updater, i.updater, s.updater );
+    trace( f );
+    trace( b );
+    trace( i );
+    trace( s );
+}
+
+function floatTupleReturn(  updateBool:   Tupdate<Null<Bool>>
+                          , updateFloat:  Tupdate<Float>
+                          , updateInt:    Tupdate<Int>
+                          , updateString: Tupdate<String> ){
+	 updateBool( true );
+   updateFloat( 12. );
+   updateInt( 100 );
+   updateString( 'hi' );
+}
+```
