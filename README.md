@@ -210,7 +210,7 @@ class Test {
 ```
   
 ## Updater
-Spicy way to return muliple values.
+Spicy way to return muliple values. Will add overhead but useful for prototyping ideas with.
   
 ```haxe
 // https://try.haxe.org/#97149E52
