@@ -208,3 +208,31 @@ class Test {
 17:28:45:821   Test.hx:672:,-1.6092364490069557
 17:28:45:822   Test.hx:672:,-1.5707963267948966
 ```
+  
+## Updater
+Spicy way to return muliple values.
+  
+```haxe
+// https://try.haxe.org/#97149E52
+function main() {
+    var f: Floaty = 10.;
+    var i: Inty = 0;
+    var b: Null<Booly> = null;
+    var s: Stringy = '';
+    floatTupleReturn( b.updater, f.updater, i.updater, s.updater );
+    trace( f );
+    trace( b );
+    trace( i );
+    trace( s );
+}
+
+function floatTupleReturn(  updateBool:   BoolUpdate
+                          , updateFloat:  FloatUpdate
+                          , updateInt:    IntUpdate
+                          , updateString: StringUpdate ){
+   updateBool( true );
+   updateFloat( 12. );
+   updateInt( 100 );
+   updateString( 'hi' );
+}
+```
