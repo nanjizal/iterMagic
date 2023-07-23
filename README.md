@@ -263,3 +263,15 @@ function floatTupleReturn(  updateBool:   Tupdate<Null<Bool>>
    updateString( 'hi' );
 }
 ```
+
+```haxe
+// https://try.haxe.org/#25B4a6DE
+function main() {
+    var i: Tmodify<Int> = 0;
+    plus1( i, i.updater );
+    trace( i );
+}
+function plus1( i:Tmodify<Int>, updateInt: Tupdate<Int> ){
+   updateInt( i + 1 );
+}
+```
