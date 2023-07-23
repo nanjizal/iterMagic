@@ -33,7 +33,7 @@ abstract Tmodify2<T>(Tstruct<T>){
 	}
   }
   @:to
-  public function toTmodify(): T{
+  public inline function toTmodify(): T{
     var s = this;
     return s.t;
   }
