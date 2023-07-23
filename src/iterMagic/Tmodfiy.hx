@@ -10,6 +10,8 @@ abstract Tmodify<T>( T ) to T from T {
     }
   }
 }
+
+// too messy but interesting..
 class Tstruct<T> {
   public var t:T;
   public var update: Tupdate<T>;
@@ -17,7 +19,7 @@ class Tstruct<T> {
      this.t = t;
   }
 }
-// too messy but interesting..
+
 @:forward
 abstract Tmodify2<T>(Tstruct<T>){
   public inline function new(t: T ){
