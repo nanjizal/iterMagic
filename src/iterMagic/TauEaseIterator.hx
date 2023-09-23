@@ -1,10 +1,9 @@
-package iterMagic;
 
+package iterMagic;
+import iterMagic.EaseIterator;
 class TauEaseIter {
     public var tauIter: TauIterator;
-    public var delta:   Float;
     public var ease: Null<Float -> Float> = null;
-    public var finish: Null<Void -> Void> = null;
     public inline 
     function new( tauIter: TauIter ){
         this.tauIter = tauIter;
@@ -12,16 +11,10 @@ class TauEaseIter {
 }
 @:transitive
 @:forward
-abstract TauEaseIter {
-    public inline function step( count_: Int ): TauIterator {
-        this.iter.iter= (new UnitIterator()).step( count_ ).toTheTop();
-        this.delta = smallest( this.start, this.end );
-        return abstract;
-    }
+abstract TauEaseIterator {
     public inline
     function new( min: Float, max: Float, steps: Int ){
-        this = new TauIter( tauLimit( min, true ), tauLimit( max, true ) );
-        step( steps );
+        this = new TauIter( tauLimit( min, true ), tauLimit( max, true ), step );
     }
     public inline
     function hasNext(): Bool {
@@ -29,15 +22,15 @@ abstract TauEaseIter {
     }
     public inline
     function next():Float {
-        var n = this.iter.iter.next();
-        var hasFinished = false;
+        var n = this.tauIter.iter.next();
+        var hasFinish = false;
         this.value = if( n == 1. ){
-            hasFinished = true;
+            hasFinish = true;
             this.end;
         } else {
-            tauLimit( this.iter.start + this.ease( n ) * this.delta, true );
+            tauLimit( this.tauIter.start + this.ease( n * this.stepSize ), true );
         }
-        if( hasFinished == true && this.iter.finish != null ) this.iter.finish();
+        if( hasFinish && finish != null ) finish();
         return this.value;
     }
     public inline
