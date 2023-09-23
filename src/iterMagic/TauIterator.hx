@@ -88,6 +88,7 @@ class TauIter{
     public var start: Float;
     public var stepSize: Float;
     public var value: Float;
+    public var count: Int;
     public var end: Float;
     public var finish: Null<Void -> Void> = null;
     public inline
@@ -101,7 +102,8 @@ class TauIter{
 @:forward
 abstract TauIterator( TauIter ) {
     public inline function step( count_: Int ): TauIterator {
-        this.iter= (new UnitIterator()).step( count_ ).toTheTop();
+        this.iter = (new UnitIterator()).step( count_ ).toTheTop();
+	this.count = count_;
         this.stepSize = 1./smallest( this.start, this.end );
         return abstract;
     }
