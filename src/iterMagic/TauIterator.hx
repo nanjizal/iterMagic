@@ -65,11 +65,11 @@ function smallest( v1: Float, v2: Float ){
     var t2 = tauLimit( v2, true );
     var dif: Float;
     return if( t1 == t2 ){
-	0.;
+	    0.;
     } else if( t1 < t2 ){
 	    dif = t2 - t1;
         if( dif < Math.PI ){
-		    dif;
+		dif;
         } else {
 	        -(2*Math.PI-dif);
         }
@@ -106,9 +106,9 @@ abstract TauIterator( TauIter ) {
         return abstract;
     }
     public inline
-    function new( min: Float, max: Float, steps: Null<Int> = null ){
+    function new( min: Float, max: Float ){
         this = new TauIter( tauLimit( min, true ), tauLimit( max, true ) );
-        if( step != null ) step( steps );
+        step( steps );
     }
     public inline
     function hasNext() {
@@ -117,12 +117,15 @@ abstract TauIterator( TauIter ) {
     public inline
     function next():Float {
         var n = this.iter.next();
+        var hasFinish = false;
         this.value = if( n == 1. ){
+            hasFinish = true;
             this.end;
-            if( finish != null ) finish();
+
         } else {
             tauLimit( this.start + n*this.stepSize, true );
-        }
+        }            
+        if( hasFinish && finish != null ) finish();
         return this.value;
     }
 }
