@@ -90,7 +90,7 @@ class ArrIntImg implements Iimg<ArrInt> {
   }
 }
 class VecIntImg implements Iimg<VecInt>{
-  var data:VecInt;
+  var data: VecInt;
   public var count   = 0;
   public var width:  Int;
   public var height: Int;
