@@ -120,7 +120,7 @@ class VecIntImg implements Iimg<VecInt>{
   }
 }
 class BytesImg implements Iimg<Bytes>{
-  var data:Bytes;
+  var data: Bytes;
   public var count   = 0;
   public var width:  Int;
   public var height: Int;
@@ -158,7 +158,7 @@ class BytesImg implements Iimg<Bytes>{
   }
 }
 class U32ArrImg implements Iimg<U32Arr> {
-  var data:U32Arr;
+  var data: U32Arr;
   public var count   = 0;
   public var width:  Int;
   public var height: Int;
@@ -188,7 +188,7 @@ class U32ArrImg implements Iimg<U32Arr> {
   }
 }
 class StackIntImg implements Iimg<StackInt> {
-  var data:StackInt;
+  var data: StackInt;
   public var count   = 0;
   public var width:  Int;
   public var height: Int;
