@@ -17,14 +17,33 @@ enum abstract ImageType(Int) {
 	var UINT32ARRAY;
 	var VECTOR;
 	var GENERICSTACK;
+  function toString(){
+    return switch( abstract ){
+			case BYTES:
+        'BYTES';
+      case ARRAY:
+        'ARRAY';
+      case UINT32ARRAY:
+      	'UINT32ARRAY';
+      case VECTOR:
+      	'VECTOR';
+      case GENERICSTACK:
+      	'GENERICSTACK';
+    }
+  }
 }
-/* example use
+/*
+// example use     
 function main() {
-  var a: Img<ArrInt> = Img.arrInt( 5, 5 );
-  var v: Img<VecInt> = Img.vecInt( 5, 5 );
-  var b: Img<Bytes>  = Img.bytes( 5, 5 );
-  var u: Img<U32Arr> = Img.u32arr( 5, 5 );
-  var s: Img<StackInt> = Img.stackInt( 5, 5 );
+  var a = new Picture( 5, 5, ARRAY );
+  var v = new Picture( 5, 5, VECTOR );
+  var b = new Picture( 5, 5, BYTES );
+  var u = new Picture( 5, 5, UINT32ARRAY );
+  var s = new Picture( 5, 5, GENERICSTACK );
+  var picture = new Picture( 5, 5 );
+  trace( picture.img.check() );
+  var picture2 = new Picture( 5, 5, VECTOR );
+  trace( picture2.img.check() );
   a[3]=1;
   v[2]=2;
   b[4]=6;
@@ -35,18 +54,18 @@ function main() {
   trace( b[4] );
   trace( u[7] );
   trace( s[1] );
-  trace( s.toString() );
+  trace( s.imgToString() );
   //for( i in a )	trace( i );
   trace('array');
   a.traceGrid();
   trace('vector');
   v.traceGrid();
   trace('array content now in vector');
-  Img.copyFromTo( a, v );
+  Picture.copyFromTo( a, v );
   v.traceGrid();
+  trace( v.imageTypeString() );
 }
-*/ 
-
+*/
 interface Iimg<T> {
   public var count: Int;
   public var width: Int;
@@ -57,7 +76,6 @@ interface Iimg<T> {
   public function zero( len: Int ): T;
   public function size( width: Int, height: Int ): T;
 }
-
 class ArrIntImg implements Iimg<ArrInt> {
   var data: ArrInt;
   public var count   = 0;
@@ -240,9 +258,114 @@ class StackIntImg implements Iimg<StackInt> {
     return zero( length );
   }
 }
+class Pic {
+	public var img: ImgMulti<Dynamic>;
+  public inline function new(){}
+}
+@:transient
+@:forward
+abstract Picture( Pic ) from Pic to Pic {
+  public inline function new( width: Int, height: Int,imageType: ImageType = UINT32ARRAY ){
+    this = new Pic();
+    this.img = cast ImgMulti.create( width, height, imageType );
+  }
+	@:arrayAccess
+  public inline
+  function set( index: Int, value: Int ): Int {
+		return this.img.set( index, value );
+  }
+  @:arrayAccess
+  public inline
+  function get( index: Int ): Int {
+		return this.img[ index ];
+  }
+  public static inline
+  function copyFromTo( a: Picture, b: Picture ) {
+    for( i in 0...b.img.length ) b.img[ i ] = a.img[ i ];
+    return b;
+  }
+  public static inline
+  function copyToFrom( a: Picture, b: Picture ) {
+    for( i in 0...b.img.length ) a.img[ i ] = b.img[ i ];             
+    return a;
+  }
+  public inline function traceGrid(){
+		this.img.traceGrid();
+  }
+  public inline function imgToString(){
+		return this.img.toString();
+  }
+  public inline function imageTypeString(){
+		return this.img.check();
+  }
+  public inline
+  function position( px: Float, py: Float ): Int {
+		return this.img.position( px, py );
+	}
+}
+@:transient
+@:forward
+abstract Img<T>( ImgMulti<T> ) from ImgMulti<T> {	
+  public inline function new( width: Int, height: Int, imageType: ImageType ){
+		this = cast ImgMulti.create( width, height, imageType );
+  }
+  @:arrayAccess
+  public inline
+  function set( index: Int, value: Int ): Int {
+		return this.set( index, value );
+  }
+  @:arrayAccess
+  public inline
+  function get( index: Int ): Int {
+		return this.get( index );
+  }
+  public static inline
+  function copyFromTo<T,S>( a: Img<T>, b: Img<S> ) {
+    for( i in 0...b.length ) b[ i ] = a[ i ];
+    return b;
+  }
+  public static inline
+  function copyToFrom<T,S>( a: Img<T>, b: Img<S> ) {
+    for( i in 0...b.length ) a[ i ] = b[ i ];
+    return a;
+  }
+}   
+@:transitive
 @:forward
 @:multiType
-abstract Img<T>( Iimg<T> ) {
+abstract ImgMulti<T>( Iimg<T> ) {
+  public static inline
+  function create( width: Int, height: Int, imageType: ImageType = UINT32ARRAY ): ImgMulti<Dynamic>{
+    return switch(  imageType ){
+				case BYTES:
+      		ImgMulti.bytes( width, height );
+        case ARRAY:
+      		ImgMulti.arrInt( width, height );
+        case UINT32ARRAY:
+      		ImgMulti.u32arr( width, height );
+        case VECTOR:
+      		ImgMulti.vecInt( width, height );
+        case GENERICSTACK:
+      		ImgMulti.stackInt( width, height );
+    };
+	}
+  public inline
+  function check(): Null<ImageType> {
+    var v: Null<ImageType> = if( this is ArrIntImg ){
+			ARRAY;
+    } else if( this is VecIntImg ){
+			VECTOR;
+    } else if( this is BytesImg ){
+			BYTES;
+    } else if( this is U32ArrImg ){
+			UINT32ARRAY;
+    } else if( this is StackIntImg ){
+			GENERICSTACK;
+    } else {
+			null;
+    }
+    return v;
+  }      
 	public function new( a:T );
 	@:to static inline
 	function toArrIntImg( t: Iimg<ArrInt>
@@ -276,31 +399,31 @@ abstract Img<T>( Iimg<T> ) {
   }
   public static inline
 	function arrInt( width: Int, height: Int ){
-		var a = new Img<ArrInt>( null );
+		var a = new ImgMulti<ArrInt>( null );
   	a.size( width, height );
   	return a;
 	}
   public static inline
 	function vecInt( width: Int, height: Int ){
-		var v = new Img<VecInt>( null );
+		var v = new ImgMulti<VecInt>( null );
   	v.size(width,height);
   	return v;
 	}
   public static inline
 	function bytes( width: Int, height: Int ){
-		var b = new Img<Bytes>( null );
+		var b = new ImgMulti<Bytes>( null );
   	b.size(width,height);
   	return b;
   }
   public static inline
 	function u32arr( width: Int, height: Int ){
-		var b = new Img<U32Arr>( null );
+		var b = new ImgMulti<U32Arr>( null );
   	b.size(width,height);
   	return b;
   }
   public static inline
 	function stackInt( width: Int, height: Int ){
-		var b = new Img<StackInt>( null );
+		var b = new ImgMulti<StackInt>( null );
   	b.size(width,height);
   	return b;
   }
@@ -350,12 +473,12 @@ abstract Img<T>( Iimg<T> ) {
     }
   }
   public static inline
-  function copyFromTo<T,S>( a: Img<T>, b: Img<S> ) {
+  function copyFromTo<T,S>( a: ImgMulti<T>, b: ImgMulti<S> ) {
     for( i in 0...b.length ) b[ i ] = a[ i ];
     return b;
   }
   public static inline
-  function copyToFrom<T,S>( a: Img<T>, b: Img<S> ) {
+  function copyToFrom<T,S>( a: ImgMulti<T>, b: ImgMulti<S> ) {
     for( i in 0...b.length ) a[ i ] = b[ i ];
     return a;
   }
