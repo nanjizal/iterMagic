@@ -10,7 +10,7 @@ class TauEaseIter {
 }
 @:transitive
 @:forward
-abstract TauEaseIter {
+abstract TauEaseIterator {
     public inline
     function new( min: Float, max: Float, steps: Int ){
         this = new TauIter( tauLimit( min, true ), tauLimit( max, true ), step );

@@ -102,8 +102,8 @@ class TauIter{
 @:forward
 abstract TauIterator( TauIter ) {
     public inline function step( count_: Int ): TauIterator {
-        this.iter= (new UnitIterator()).step( count_ ).toTheTop();
-        this.count = count_;
+        this.iter = (new UnitIterator()).step( count_ ).toTheTop();
+	this.count = count_;
         this.stepSize = 1./smallest( this.start, this.end );
         return abstract;
     }
@@ -130,4 +130,8 @@ abstract TauIterator( TauIter ) {
         if( hasFinish && finish != null ) finish();
         return this.value;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> eca1a1103a4f3a44a430b95b38cfec92e5bad690
