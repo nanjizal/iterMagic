@@ -34,11 +34,11 @@ enum abstract ImageType(Int) {
 }
 
 enum RawImageData {
-	RawBytesImg( b: BytesInt );
-  RawArrImg( a: ArrInt );
-  RawU32Img( u: U32Arr );
-	RawVecImg( v: VecInt );
-  RawStackImg( s: StackInt );
+    RawBytesImg( b: BytesInt );
+    RawArrImg( a: ArrInt );
+    RawU32Img( u: U32Arr );
+    RawVecImg( v: VecInt );
+    RawStackImg( s: StackInt );
 }
 /*
 // example use     
@@ -75,18 +75,18 @@ function main() {
   rawTrace( v );
 }
 function rawTrace( p: Picture ){
-  trace('raw trace');
-	switch( p.raw ){
-		case RawBytesImg( b ):
-      trace( 'BytesInt data ' + b );
-    case RawArrImg( a ):
-      trace( 'ArrInt data ' + a );
-    case RawU32Img( u ):
-      trace( 'U32Arr data ' + u );
-    case RawVecImg( v ):
-      trace( 'VecInt data ' + v );
-    case RawStackImg( s ):
-      trace( 'StackInt data ' + s );
+    trace('raw trace');
+    switch( p.raw ){
+        case RawBytesImg( b ):
+            trace( 'BytesInt data ' + b );
+        case RawArrImg( a ):
+            trace( 'ArrInt data ' + a );
+        case RawU32Img( u ):
+            trace( 'U32Arr data ' + u );
+        case RawVecImg( v ):
+            trace( 'VecInt data ' + v );
+        case RawStackImg( s ):
+            trace( 'StackInt data ' + s );
   }
 }
 */      
@@ -131,31 +131,31 @@ class ArrIntImg implements Iimg<ArrInt> {
         length      = Std.int( width*height );
         return zero( length );
     }
-  public function setRaw( d: RawImageData ): RawImageData {
-    var dataD: Null<ArrInt> = switch( d ){
-		case RawArrImg( a ):
-      	    if( a.length == data.length ){
-				a;
-    	    } else {
-               var diff = a.length - data.length;
-               if( diff > 0 ){
-                  throw new haxe.Exception('ArrInt is too long $diff');
-    		   } else if( diff < 0 ){
-			     throw new haxe.Exception('ArrInt is too short $diff');
-    		   }
-      		   null;
-    		}
-      case _:
-        var notA  = d;
-      	throw new haxe.Exception('can not accept incorrect RawImageData $notA');
-        null;
+    public function setRaw( d: RawImageData ): RawImageData {
+        var dataD: Null<ArrInt> = switch( d ){
+            case RawArrImg( a ):
+                if( a.length == data.length ){
+                    a;
+                } else {
+                    var diff = a.length - data.length;
+                    if( diff > 0 ){
+                        throw new haxe.Exception('ArrInt is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('ArrInt is too short $diff');
+                    }
+                    null;
+                }
+            case _:
+                var notA  = d;
+                throw new haxe.Exception('can not accept incorrect RawImageData $notA');
+                null;
+        }
+        if( dataD != null ) data = dataD;
+        return d;
     }
-    if( dataD != null ) data = dataD;
-    return d;
-  }
-  public function getRaw(): RawImageData {
-		return RawArrImg( data );
-  }
+    public function getRaw(): RawImageData {
+        return RawArrImg( data );
+    }
 }          
       
 class VecIntImg implements Iimg<VecInt>{
@@ -187,30 +187,30 @@ class VecIntImg implements Iimg<VecInt>{
         data        = new Vector( length );
         return zero( length );
     }
-  public function setRaw( d: RawImageData ): RawImageData {
-      var dataD: Null<VecInt> = switch( d ){
-		case RawVecImg( v ):
-      	    if( v.length == data.length ){
-				v;
-    	    } else {
-                var diff = v.length - data.length;
-      		    if( diff > 0 ){
-    				throw new haxe.Exception('VecInt is too long $diff');
-    			} else if( diff < 0 ){
-    				throw new haxe.Exception('VecInt is too short $diff');
-    			}
+    public function setRaw( d: RawImageData ): RawImageData {
+        var dataD: Null<VecInt> = switch( d ){
+            case RawVecImg( v ):
+                if( v.length == data.length ){
+                    v;
+                } else {
+                    var diff = v.length - data.length;
+                    if( diff > 0 ){
+                        throw new haxe.Exception('VecInt is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('VecInt is too short $diff');
+                    }
+                    null;
+                }
+            case _:
+                var notV  = d;
+                throw new haxe.Exception('can not accept incorrect RawImageData $notV');
                 null;
-    		}
-          case _:
-            var notV  = d;
-      	    throw new haxe.Exception('can not accept incorrect RawImageData $notV');
-            null;
         }
-        if( dataD != null ){data = dataD;
+        if( dataD != null ) data = dataD;
         return d;
     }
     public function getRaw(): RawImageData {
-		return RawVecImg( data );
+        return RawVecImg( data );
     }
 }
 class BytesImg implements Iimg<BytesInt>{
@@ -252,28 +252,28 @@ class BytesImg implements Iimg<BytesInt>{
     }
     public function setRaw( d: RawImageData ): RawImageData {
         var dataD: Null<BytesInt> = switch( d ){
-			case RawBytesImg( b ):
-      	        if( b.length == data.length ){
-					b;
-    		    } else {
+            case RawBytesImg( b ):
+                if( b.length == data.length ){
+                    b;
+                } else {
                     var diff = b.length - data.length;
-      		        if( diff > 0 ){
-					    throw new haxe.Exception('BytesInt is too long $diff');
-    			    } else if( diff < 0 ){
-					    throw new haxe.Exception('BytesInt is too short $diff');
-    			    }
-     		        null;
-    		    }
+                    if( diff > 0 ){
+                        throw new haxe.Exception('BytesInt is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('BytesInt is too short $diff');
+                    }
+                    null;
+                }
             case _:
                 var notB  = d;
-      	        throw new haxe.Exception('can not accept incorrect RawImageData $notB');
+                throw new haxe.Exception('can not accept incorrect RawImageData $notB');
                 null;
         }
         if( dataD != null ) data = dataD;
         return d;
     }
     public function getRaw(): RawImageData {
-		return RawBytesImg( data );
+        return RawBytesImg( data );
     }
 }
 class U32ArrImg implements Iimg<U32Arr> {
@@ -307,18 +307,18 @@ class U32ArrImg implements Iimg<U32Arr> {
     }
     public function setRaw( d: RawImageData ): RawImageData {
         var dataD: Null<U32Arr> = switch( d ){
-			case RawU32Img( u ):
-      	        if( u.length == data.length ){
-					u;
-    		    } else {
+            case RawU32Img( u ):
+                if( u.length == data.length ){
+                    u;
+                } else {
                     var diff = u.length - data.length;
-      		        if( diff > 0 ){
-						throw new haxe.Exception('U32Arr is too long $diff');
-    			    } else if( diff < 0 ){
-						throw new haxe.Exception('U32Arr is too short $diff');
-    			    }
+                    if( diff > 0 ){
+                        throw new haxe.Exception('U32Arr is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('U32Arr is too short $diff');
+                    }
                     null;
-    		    }
+                }
             case _:
                 var notU  = d;
       	        throw new haxe.Exception('can not accept incorrect RawImageData $notU');
@@ -328,7 +328,7 @@ class U32ArrImg implements Iimg<U32Arr> {
         return d;
     }
     public function getRaw(): RawImageData {
-		return RawU32Img( data );
+        return RawU32Img( data );
     }
 }
 class StackIntImg implements Iimg<StackInt> {
@@ -384,32 +384,31 @@ class StackIntImg implements Iimg<StackInt> {
         return zero( length );
     }
     public function setRaw( d: RawImageData ): RawImageData {
-    	var dataD: Null<StackInt> = switch( d ){
-			case RawStackImg( s ):
+        var dataD: Null<StackInt> = switch( d ){
+            case RawStackImg( s ):
                 var l = 0;
                 for( i in s.iterator() ) l++;
                 if( l == this.length ){
-					s;
-    		    } else {
+                    s;
+                } else {
                     var diff = l - length;
-      		        if( diff > 0 ){
-					    throw new haxe.Exception('StackInt is too long $diff');
-    			    } else if( diff < 0 ){
-					    throw new haxe.Exception('StackInt is too short $diff');
-    			    }
+                    if( diff > 0 ){
+                        throw new haxe.Exception('StackInt is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('StackInt is too short $diff');
+                    }
                     null;
-    		    }
-              case _:
-                  var notS  = d;
-      	          throw new haxe.Exception('can not accept incorrect RawImageData $notS');
-                  null;
-            }
-            if( dataD != null ) data = dataD;
+                }
+            case _:
+                var notS  = d;
+                throw new haxe.Exception('can not accept incorrect RawImageData $notS');
+                null;
         }
+        if( dataD != null ) data = dataD;
         return d;
     }
     public function getRaw(): RawImageData {
-		return RawStackImg( data );
+        return RawStackImg( data );
     }
 }
 class Pic {
@@ -443,14 +442,14 @@ abstract Picture( Pic ) from Pic to Pic {
         for( i in 0...b.img.length ) a.img[ i ] = b.img[ i ];             
         return a;
     }
-  	public var raw( get, set ): RawImageData;
+    public var raw( get, set ): RawImageData;
     private inline
     function get_raw(): RawImageData {
-	    return this.img.getRaw();
+        return this.img.getRaw();
     }
-  	private inline
-  	function set_raw( d: RawImageData ): RawImageData {
-	    return this.img.setRaw( d );
+    private inline
+    function set_raw( d: RawImageData ): RawImageData {
+        return this.img.setRaw( d );
     }
     public inline function traceGrid(){
         this.img.traceGrid();
@@ -602,11 +601,11 @@ abstract ImgMulti<T>( Iimg<T> ) {
     }
     public inline
     function setRaw( d: RawImageData ): RawImageData{
-		return this.setRaw( d );
+        return this.setRaw( d );
     }      
     public inline
     function getRaw( ): RawImageData{
-		return this.getRaw();
+        return this.getRaw();
     }
     public inline
     function position( px: Float, py: Float ): Int {
