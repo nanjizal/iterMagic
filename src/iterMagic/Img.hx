@@ -8,6 +8,7 @@ import haxe.ds.Vector;
 typedef BytesInt = haxe.io.Bytes;
 typedef ArrInt = Array<Int>;
 typedef U32Arr = haxe.io.UInt32Array;
+typedef U8Arr  = haxe.io.UInt8Array;
 typedef VecInt = haxe.ds.Vector<Int>;
 typedef StackInt = haxe.ds.GenericStack<Int>;
 
@@ -15,6 +16,7 @@ enum abstract ImageType(Int) {
     var BYTES_INT;
     var ARRAY_INT;
     var U32_ARR;
+    var U8_ARR;
     var VECTOR_INT;
     var STACK_INT;
     function toString(){
@@ -25,6 +27,8 @@ enum abstract ImageType(Int) {
               'ARRAY_INT';
             case U32_ARR:
               'U32_ARR';
+            case U8_ARR:
+                'U8_ARR';
             case VECTOR_INT:
               'VECTOR_INT';
             case STACK_INT:
@@ -37,6 +41,7 @@ enum RawImageData {
     RawBytesImg( b: BytesInt );
     RawArrImg( a: ArrInt );
     RawU32Img( u: U32Arr );
+    RawU8Img( u8: U8Arr );
     RawVecImg( v: VecInt );
     RawStackImg( s: StackInt );
 }
@@ -47,6 +52,7 @@ function main() {
   var v = new Picture( 5, 5, VECTOR_INT );
   var b = new Picture( 5, 5, BYTES_INT );
   var u = new Picture( 5, 5, U32_ARR );
+  var u8 = new Picture( 5, 5, U8_ARR );
   var s = new Picture( 5, 5, STACK_INT );
   var picture = new Picture( 5, 5 );
   trace( picture.img.check() );
@@ -56,13 +62,18 @@ function main() {
   v[2]=2;
   b[4]=6;
   u[7]=7;
+  u8[6]=9;
   s[1]=3;
   trace( a[3] );
   trace( v[2] );
   trace( b[4] );
   trace( u[7] );
+  trace( u8[6] );
   trace( s[1] );
   trace( s.imgToString() );
+  trace('u8 grid');
+  u8.traceGrid();
+  trace( u8 );
   //for( i in a )	trace( i );
   trace('array');
   a.traceGrid();
@@ -74,6 +85,7 @@ function main() {
   trace( v.imageTypeString() );
   rawTrace( v );
 }
+*/
 function rawTrace( p: Picture ){
     trace('raw trace');
     switch( p.raw ){
@@ -83,13 +95,14 @@ function rawTrace( p: Picture ){
             trace( 'ArrInt data ' + a );
         case RawU32Img( u ):
             trace( 'U32Arr data ' + u );
+        case RawU8Img( u8 ):
+            trace( 'U8Arr data ' + u8 );
         case RawVecImg( v ):
             trace( 'VecInt data ' + v );
         case RawStackImg( s ):
             trace( 'StackInt data ' + s );
   }
 }
-*/      
 interface Iimg<T> {
     public var count: Int;
     public var width: Int;
@@ -331,6 +344,66 @@ class U32ArrImg implements Iimg<U32Arr> {
         return RawU32Img( data );
     }
 }
+class U8ArrImg implements Iimg<U8Arr> {
+    var data: U8Arr;
+    public var count   = 0;
+    public var width:  Int;
+    public var height: Int;
+    public var length: Int;
+    public function new(){}
+    public inline
+    function set( index: Int, value: Int ): Int {
+        var w = index*4;
+        data.set( w, value >> 24 & 0xFF );
+        data.set( w+1, value >> 16 & 0xFF );
+        data.set( w+2, value >> 8 & 0xFF );
+        data.set( w+3, value & 0xFF );
+        return value;
+    }
+    public inline
+    function get( index: Int ): Int {
+        var w = index*4;
+        return data.get( w ) << 24 | data.get( w+1 ) << 16 | data.get(w+2) << 8 | data.get(w+3);
+    }
+    public inline
+    function zero( len :Int ): U8Arr {
+        for( i in 0...len*4 ) data.set( i, 0 );
+        return data;
+    }
+    public inline
+    function size( width: Int, height: Int ): U8Arr {
+        this.width  = width;
+        this.height = height;
+        length      = Std.int( width*height );
+        data   = new haxe.io.UInt8Array( length*4 );
+        return zero( length );
+    }
+    public function setRaw( d: RawImageData ): RawImageData {
+        var dataD: Null<U8Arr> = switch( d ){
+            case RawU8Img( u ):
+                if( u.length == data.length*4 ){
+                    u;
+                } else {
+                    var diff = u.length - data.length*4;
+                    if( diff > 0 ){
+                        throw new haxe.Exception('U8Arr is too long $diff');
+                    } else if( diff < 0 ){
+                        throw new haxe.Exception('U8Arr is too short $diff');
+                    }
+                    null;
+                }
+            case _:
+                var notU8  = d;
+      	        throw new haxe.Exception('can not accept incorrect RawImageData $notU8');
+                null;
+        }
+        if( dataD != null ) data = dataD;
+        return d;
+    }
+    public function getRaw(): RawImageData {
+        return RawU8Img( data );
+    }
+}
 class StackIntImg implements Iimg<StackInt> {
     var data: StackInt;
     public var count   = 0;
@@ -505,6 +578,8 @@ abstract ImgMulti<T>( Iimg<T> ) {
                         ImgMulti.arrInt( width, height );
                     case U32_ARR:
                         ImgMulti.u32arr( width, height );
+                    case U8_ARR:
+          							ImgMulti.u8arr( width, height );
                     case VECTOR_INT:
                         ImgMulti.vecInt( width, height );
                     case STACK_INT:
@@ -521,6 +596,8 @@ abstract ImgMulti<T>( Iimg<T> ) {
             BYTES_INT;
         } else if( this is U32ArrImg ){
             U32_ARR;
+        } else if ( this is U8ArrImg ){
+						U8_ARR;
         } else if( this is StackIntImg ){
             STACK_INT;
         } else {
@@ -554,6 +631,12 @@ abstract ImgMulti<T>( Iimg<T> ) {
         return u32a;
     }
     @:to static inline
+    function toU8ArrImg( t: Iimg<U8Arr>
+                        , s: Null<U8Arr> = null ): U8ArrImg {
+        var u8a = new U8ArrImg( );
+        return u8a;
+    }
+    @:to static inline
     function toStackIntImg( t: Iimg<StackInt>
                           , s: Null<StackInt> = null ): StackIntImg {
         var sInt = new StackIntImg( );
@@ -580,6 +663,12 @@ abstract ImgMulti<T>( Iimg<T> ) {
     public static inline
     function u32arr( width: Int, height: Int ){
         var b = new ImgMulti<U32Arr>( null );
+        b.size(width,height);
+        return b;
+    }
+    public static inline
+    function u8arr( width: Int, height: Int ){
+        var b = new ImgMulti<U8Arr>( null );
         b.size(width,height);
         return b;
     }
