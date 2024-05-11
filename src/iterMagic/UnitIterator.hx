@@ -30,12 +30,12 @@ class UnitIter {
     function new(){}
 }
 @:transitive
-@:access( IntIterator.min, IntIterator.max )
-@:access( UnitIter.includeMax )
-@:access( UnitIter.isNegative )
-@:access( UnitIter.cropTo )
-@:access( UnitIter.count )
-@:access( UnitIter.value )
+@:access( iterMagic.IntIterator.min, iterMagic.IntIterator.max )
+@:access( iterMagic.UnitIter.includeMax )
+@:access( iterMagic.UnitIter.isNegative )
+@:access( iterMagic.UnitIter.cropTo )
+@:access( iterMagic.UnitIter.count )
+@:access( iterMagic.UnitIter.value )
 @:forward
 abstract UnitIterator( UnitIter ) from UnitIter {
     // step must be positive

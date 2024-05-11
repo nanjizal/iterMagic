@@ -1,8 +1,7 @@
 package iterMagic;
 import iterMagic.UnitIterator;
-function get_epsilon(): Float {
-    return 0.000000000000005;
-}
+var epsilon: Float = 0.000000000000005;
+
 var pie_2( get, never ): Float;
 inline
 function get_pie_2(): Float {
@@ -88,7 +87,7 @@ class TauIter{
     public var start: Float;
     public var stepSize: Float;
     public var value: Float;
-    public var count: Int;
+    public var count: Float;
     public var end: Float;
     public var finish: Null<Void -> Void> = null;
     public inline
@@ -101,14 +100,14 @@ class TauIter{
 @:transitive
 @:forward
 abstract TauIterator( TauIter ) {
-    public inline function step( count_: Int ): TauIterator {
+    public function step( count_: Int ): TauIterator {
         this.iter = (new UnitIterator()).step( count_ ).toTheTop();
-	this.count = count_;
+        this.count = count_;
         this.stepSize = 1./smallest( this.start, this.end );
         return abstract;
     }
     public inline
-    function new( min: Float, max: Float ){
+    function new( min: Float, max: Float, steps: Int ){
         this = new TauIter( tauLimit( min, true ), tauLimit( max, true ) );
         step( steps );
     }
@@ -127,11 +126,7 @@ abstract TauIterator( TauIter ) {
         } else {
             tauLimit( this.start + n*this.stepSize, true );
         }            
-        if( hasFinish && finish != null ) finish();
+        if( hasFinish && this.finish != null ) this.finish();
         return this.value;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> eca1a1103a4f3a44a430b95b38cfec92e5bad690
